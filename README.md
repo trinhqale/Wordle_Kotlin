@@ -20,8 +20,8 @@ The following **optional** features are implemented:
 - [ ] User can toggle betweeen different word lists
 - [ ] User can see the 'correctness' of their guess through colors on the word 
 - [ ] User sees a visual change after guessing the correct word
-- [ ] User can tap a 'Reset' button to get a new word and clear previous guesses
-- [ ] User will get an error message if they input an invalid guess
+- [x] User can tap a 'Reset' button to get a new word and clear previous guesses
+- [x] User will get an error message if they input an invalid guess (in the gif this feature wasn't updated) 
 - [ ] User can see a 'streak' record of how many words they've guessed correctly.
 
 The following **additional** features are implemented:
@@ -31,11 +31,11 @@ The following **additional** features are implemented:
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
-
-<img src='https://i.imgur.com/m96xhxC.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+![Alt text](Android_lab1.gif?raw=true "Optional Title")
+<img src='https://raw.githubusercontent.com/trinhqale/Wordle/master/Android_lab1.gif?token=GHSAT0AAAAAAB7E7RRXUJ7I4IGSVUWNDH5GY7XB2TA' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 <!-- Replace this with whatever GIF tool you used! -->
-GIF created with imgur.com
+GIF created with screentogif
 <!-- Recommended tools:
 [Kap](https://getkap.co/) for macOS
 [ScreenToGif](https://www.screentogif.com/) for Windows
