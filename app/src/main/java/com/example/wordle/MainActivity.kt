@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -47,7 +48,21 @@ class MainActivity : AppCompatActivity() {
         }
         return result
     }
+    //check if the input is valid
+    private fun isValid(guess: String): Boolean{
+        val wordList = FourLetterWordList.getAllFourLetterWords()
+        val word = guess.lowercase().replaceFirstChar { it.uppercase() } // capitalize
+//        Log.d(word, word) //debug
+        if (guess.length != 4){
+            return false
+        }
+        if (!wordList.contains(word))
+        {
+            return false
+        }
 
+        return true
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,39 +88,45 @@ class MainActivity : AppCompatActivity() {
         button.setOnClickListener {
             var simpleEditText = findViewById<View>(R.id.guessText) as EditText
             var guess = simpleEditText.text.toString().uppercase()
-//            Toast.makeText(it.context, "You guessed $guess", Toast.LENGTH_SHORT).show()
-            var check = checkGuess(guess)
-            if (check == "OOOO") {
-                Toast.makeText(it.context, "YOU WIN!", Toast.LENGTH_SHORT).show()
-                button.visibility = View.INVISIBLE
+//            Toast.makeText(it.context, "word is $targetWords", Toast.LENGTH_SHORT).show()
+            var valid = isValid(guess)
+            if (!valid) {
+                Toast.makeText(it.context, "Invalid input. Please try again.", Toast.LENGTH_SHORT).show()
+                simpleEditText.setText(null)
             } else {
-                guessCount++
-                if (guessCount == 1) {
-                    guess1.text = guess
-                    hint1.text = check
-                } else if (guessCount == 2) {
-                    guess2.text = guess
-                    hint2.text = check
-                } else if (guessCount == 3) {
-                    guess3.text = guess
-                    hint3.text = check
-                    Toast.makeText(it.context, "You've guessed 3 times", Toast.LENGTH_SHORT)
-                        .show()
-                    textView.visibility = View.VISIBLE
+                var check = checkGuess(guess)
+
+                if (check == "OOOO") {
+//                    Toast.makeText(it.context, "YOU WIN!", Toast.LENGTH_SHORT).show()
+                    textView.text = "You win! The word is " + textView.text
                     button.visibility = View.INVISIBLE
-                    newGameButton.visibility = View.VISIBLE
-                    simpleEditText.isEnabled = false
-                    simpleEditText.visibility = View.INVISIBLE
+                } else {
+                    guessCount++
+                    if (guessCount == 1) {
+                        guess1.text = guess
+                        hint1.text = check
+                    } else if (guessCount == 2) {
+                        guess2.text = guess
+                        hint2.text = check
+                    } else if (guessCount == 3) {
+                        guess3.text = guess
+                        hint3.text = check
+//                        Toast.makeText(it.context, "You've guessed 3 times", Toast.LENGTH_SHORT).show()
+                        textView.text = "You lost! The word is " + textView.text
+                        textView.visibility = View.VISIBLE
+                        button.visibility = View.INVISIBLE
+                        newGameButton.visibility = View.VISIBLE
+                        simpleEditText.isEnabled = false
+                        simpleEditText.visibility = View.INVISIBLE
+                    }
                 }
+
+                simpleEditText.setText(null)
             }
-
-            simpleEditText.setText(null)
+            newGameButton.setOnClickListener {
+                this.recreate()
+            }
         }
-        newGameButton.setOnClickListener {
-            this.recreate()
-
-        }
-
     }
 
 
