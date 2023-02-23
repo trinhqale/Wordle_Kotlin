@@ -31,7 +31,7 @@ The following **additional** features are implemented:
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
-
+![Alt text](Android_lab1.gif?raw=true "Optional Title")
 <img src='https://raw.githubusercontent.com/trinhqale/Wordle/master/Android_lab1.gif?token=GHSAT0AAAAAAB7E7RRXUJ7I4IGSVUWNDH5GY7XB2TA' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 <!-- Replace this with whatever GIF tool you used! -->
