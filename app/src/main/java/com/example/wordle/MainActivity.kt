@@ -2,6 +2,7 @@ package com.example.wordle
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import nl.dionsegijn.konfetti.KonfettiView
+import nl.dionsegijn.konfetti.models.Shape
+import nl.dionsegijn.konfetti.models.Size
 
 
 object FourLetterWordList {
@@ -52,7 +56,7 @@ class MainActivity : AppCompatActivity() {
     private fun isValid(guess: String): Boolean{
         val wordList = FourLetterWordList.getAllFourLetterWords()
         val word = guess.lowercase().replaceFirstChar { it.uppercase() } // capitalize
-//        Log.d(word, word) //debug
+//
         if (guess.length != 4){
             return false
         }
@@ -72,7 +76,7 @@ class MainActivity : AppCompatActivity() {
 
         val textView = findViewById<TextView>(R.id.textView)
         val button = findViewById<Button>(R.id.button)
-
+//        val confetti = findViewById<KonfettiView>(R.id.confetti)
         val newGameButton = findViewById<Button>(R.id.playAgain)
         newGameButton.visibility = View.INVISIBLE
 
@@ -82,13 +86,17 @@ class MainActivity : AppCompatActivity() {
         var hint1 = findViewById<TextView>(R.id.textView5)
         var hint2 = findViewById<TextView>(R.id.textView6)
         var hint3 = findViewById<TextView>(R.id.textView7)
+        val viewKonfetti = findViewById<KonfettiView>(R.id.viewKonfetti)
+
         //Edit Text
+
         textView.text = targetWords
         textView.visibility = View.INVISIBLE
+        Log.d("the word is", ("$targetWords"))
         button.setOnClickListener {
             var simpleEditText = findViewById<View>(R.id.guessText) as EditText
             var guess = simpleEditText.text.toString().uppercase()
-//            Toast.makeText(it.context, "word is $targetWords", Toast.LENGTH_SHORT).show()
+
             var valid = isValid(guess)
             if (!valid) {
                 Toast.makeText(it.context, "Invalid input. Please try again.", Toast.LENGTH_SHORT).show()
@@ -99,7 +107,29 @@ class MainActivity : AppCompatActivity() {
                 if (check == "OOOO") {
 //                    Toast.makeText(it.context, "YOU WIN!", Toast.LENGTH_SHORT).show()
                     textView.text = "You win! The word is " + textView.text
+                    textView.visibility = View.VISIBLE
                     button.visibility = View.INVISIBLE
+                    newGameButton.visibility = View.VISIBLE
+                    simpleEditText.isEnabled = false
+                    simpleEditText.visibility = View.INVISIBLE
+
+                    hint1.visibility = View.INVISIBLE
+                    hint2.visibility = View.INVISIBLE
+                    hint3.visibility = View.INVISIBLE
+                    guess1.visibility = View.INVISIBLE
+                    guess2.visibility = View.INVISIBLE
+                    guess3.visibility = View.INVISIBLE
+
+                    viewKonfetti.build()
+                        .addColors(Color.RED, Color.GREEN, Color.MAGENTA)
+                        .setDirection(0.0, 359.0)
+                        .setSpeed(1f, 5f)
+                        .setFadeOutEnabled(true)
+                        .setTimeToLive(2000L)
+                        .addShapes(Shape.Square, Shape.Circle)
+                        .addSizes(Size(12))
+                        .setPosition(-50f, viewKonfetti.width + 50f, -50f, -50f)
+                        .streamFor(300, 5000L)
                 } else {
                     guessCount++
                     if (guessCount == 1) {
